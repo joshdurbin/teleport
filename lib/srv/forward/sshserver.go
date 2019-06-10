@@ -105,6 +105,9 @@ type Server struct {
 	// forwarding server.
 	termHandlers *srv.TermHandlers
 
+	// UseTunnel indicates of this server is connected over a reverse tunnel.
+	useTunnel bool
+
 	// ciphers is a list of ciphers that the server supports. If omitted,
 	// the defaults will be used.
 	ciphers []string
@@ -138,6 +141,9 @@ type ServerConfig struct {
 	SrcAddr         net.Addr
 	DstAddr         net.Addr
 	HostCertificate ssh.Signer
+
+	// UseTunnel indicates of this server is connected over a reverse tunnel.
+	UseTunnel bool
 
 	// Ciphers is a list of ciphers that the server supports. If omitted,
 	// the defaults will be used.
@@ -324,6 +330,12 @@ func (s *Server) GetSessionServer() session.Service {
 // server runs in-memory, it does not support PAM.
 func (s *Server) GetPAM() (*pam.Config, error) {
 	return nil, trace.BadParameter("PAM not supported by forwarding server")
+}
+
+// UseTunnel is always false for the forwarding server because it's always
+// instantiated on the proxy.
+func (s *Server) UseTunnel() bool {
+	return s.useTunnel
 }
 
 // GetInfo returns a services.Server that represents this server.

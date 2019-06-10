@@ -558,6 +558,7 @@ func (s *remoteSite) dialWithAgent(params DialParams) (net.Conn, error) {
 		KEXAlgorithms:   s.srv.Config.KEXAlgorithms,
 		MACAlgorithms:   s.srv.Config.MACAlgorithms,
 		DataDir:         s.srv.Config.DataDir,
+		UseTunnel:       false,
 	}
 	remoteServer, err := forward.New(serverConfig)
 	if err != nil {

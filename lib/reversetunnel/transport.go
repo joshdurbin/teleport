@@ -283,7 +283,7 @@ func proxyTransport(p *transportParams) {
 		return
 	}
 
-	// Dail was successful.
+	// Dial was successful.
 	req.Reply(true, []byte("Connected."))
 	p.log.Debugf("Successfully dialed to %v %v, start proxying.", dreq.Address, dreq.ServerID)
 
